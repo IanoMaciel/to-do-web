@@ -26,7 +26,10 @@ export const Container = styled.div`
         
     }
 
+    transition: all 0.3s ease;
+
     &:hover {
         background: #EE6B26;
+        opacity: 0.7;
     }
 `
