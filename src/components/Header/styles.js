@@ -45,6 +45,12 @@ export const RigthSide = styled.div`
             opacity: .7;
         }
     }
+    
+    button {
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
 
     #notification {
         img {
