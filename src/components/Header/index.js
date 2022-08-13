@@ -1,8 +1,11 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
+import * as S from './styles'
+
 import logo from '../../assets/logo.png'
 import bell from '../../assets/bell.png'
 
-import * as S from './styles'
+
 
 function Header({ lateCount, clickNotification }) {
   return (
@@ -12,9 +15,9 @@ function Header({ lateCount, clickNotification }) {
       </S.LeftSide>
 
       <S.RigthSide>
-        <a href='#'>HOME</a>
+        <Link to="/">HOME</Link>
         <span className='divider'/>
-        <a href='#'>NOVA TAREFA</a>
+        <Link to="/task">NOVA TAREFA</Link>
         <span className='divider'/>
         <a href='#'>SINCRONIZAR CELULAR</a>
         <span className='divider'/>

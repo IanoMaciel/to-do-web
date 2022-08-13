@@ -1,18 +1,22 @@
-import React from "react";
-import * as S from './styles'
-import iconDefault from '../../assets/default.png'
+import React, { useMemo } from "react";
+import { format } from 'date-fns';
+import * as S from './styles';
+
+import typeIcons from "../../utils/typeicons";
 
 
-function TaskCard() {
+function TaskCard({ type, title, when }) {
+    const date = useMemo(() => format(new Date(when), 'dd/MM/yyyy'));
+    const hour = useMemo(() => format(new Date(when), 'HH:mm'));
     return(
         <S.Container>
             <S.TopCard>
-                <img src={iconDefault} alt="iconDefault"/>
-                <h2>Titulo da tarefa</h2>
+                <img src={ typeIcons[type] } alt="iconDefault"/>
+                <h2>{title}</h2>
             </S.TopCard>
             <S.BottomCard>
-                <strong>09/08/2022</strong>
-                <small>10:46</small>
+                <strong>{date}</strong>
+                <small>{hour}</small>
             </S.BottomCard>
         </S.Container>
     );
