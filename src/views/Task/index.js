@@ -34,6 +34,7 @@ function Task({match}) {
         await api.get(`/task/${match.params.id}`)
         .then(response => {
             setType(response.data.type)
+            setDone(response.data.done)
             setTitle(response.data.title)
             setDescription(response.data.description)
             setDate(format(new Date(response.data.when), 'yyyy-MM-dd'))
@@ -42,6 +43,19 @@ function Task({match}) {
     }
 
     async function Save() {
+        // validação dos campos
+        if(!title)
+            return alert('Informe o título da tarefa');
+        else if(!type)
+            return alert('Informe o tipo da tarefa');
+        else if(!description)
+            return alert('Informe a descrição da tarefa');
+        else if(!date)
+            return alert('Informe uma data'); 
+        else if(!hour) 
+            return alert('Informe a hora da tarefa');
+        
+
         if(match.params.id) {
             await api.put(`/task/${match.params.id}`, {
                 macaddress,
@@ -59,6 +73,17 @@ function Task({match}) {
                 description,
                 when: `${date}T${hour}:00.000`
             }).then(() => setRedirect(true))
+        }
+    }
+
+    async function Remove() {
+        const res = window.confirm('Deseja remover está tarefa?')
+        if(res == true) {
+            await api.delete(`/task/${match.params.id}`)
+            .then(() => setRedirect(true))
+        } else {
+            alert('Ok, manteremos sua tarefa');
+            setRedirect(true)
         }
     }
 
@@ -117,7 +142,7 @@ function Task({match}) {
                         <span>CONCLUÍDO</span>
                     </div>
 
-                    <button type="button">EXCLUIR</button>
+                    { match.params.id && <button type="button" onClick={Remove} >EXCLUIR</button> }
                 </S.Options>
 
                 <S.Save>

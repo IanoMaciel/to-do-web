@@ -13,6 +13,7 @@ export const Container = styled.div`
     flex-direction: column;
 
     margin: 20px;
+    opacity: ${props => props.done ? 0.5 : 1};
 
     transition: all 0.3s ease;
     cursor: pointer;
