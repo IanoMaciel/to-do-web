@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Redirect } from 'react-router-dom';
 import { format } from 'date-fns';
 import * as S from './styles';
 
@@ -11,6 +12,7 @@ import Footer from '../../components/Footer';
 import typeIcons from '../../utils/typeicons';
 
 function Task({match}) {
+    const [redirect, setRedirect] = useState(false);
     const [lateCount, setLateCount] = useState();
     const [type, setType] = useState();
     const [id, setId] = useState();
@@ -19,7 +21,7 @@ function Task({match}) {
     const [description, setDescription] = useState();
     const [date, setDate] = useState();
     const [hour, setHour] = useState();
-    const [macaddress, setMacaddress] = useState('11:11:11:11:11:11s');
+    const [macaddress, setMacaddress] = useState('11:11:11:11:11:11');
    
     async function lateVerify() {
         await api.get(`/task/filter/late/11:11:11:11:11:11`)
@@ -40,13 +42,24 @@ function Task({match}) {
     }
 
     async function Save() {
-        await api.post('/task', {
-            macaddress,
-            type,
-            title,
-            description,
-            when: `${date}T${hour}:00.000`
-        }).then(() => alert('Cadastro realizado com sucesso!'))
+        if(match.params.id) {
+            await api.put(`/task/${match.params.id}`, {
+                macaddress,
+                done,
+                type,
+                title,
+                description,
+                when: `${date}T${hour}:00.000`
+            }).then(() => setRedirect(true))
+        } else {
+            await api.post('/task', {
+                macaddress,
+                type,
+                title,
+                description,
+                when: `${date}T${hour}:00.000`
+            }).then(() => setRedirect(true))
+        }
     }
 
     useEffect(() => {
@@ -56,6 +69,7 @@ function Task({match}) {
 
     return (
         <S.Container>
+            { redirect && <Redirect to="/"/> }
             <Header lateCount={lateCount}/>
             
             <S.Form>

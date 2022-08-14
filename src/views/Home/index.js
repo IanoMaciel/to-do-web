@@ -71,7 +71,6 @@ function Home() {
             <Link to={`/task/${t._id}`}>
               <TaskCard type={t.type} title={t.title} when={t.when}/>
             </Link>
-            
           ))
         }          
       </S.Content>
