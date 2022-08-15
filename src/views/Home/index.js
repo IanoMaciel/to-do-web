@@ -14,7 +14,6 @@ import TaskCard from '../../components/TaskCard';
 function Home() {
   const [filterActivated, setFilterActivated] = useState('all');
   const [tasks, setTasks] = useState([]);
-  const [lateCount, setLateCount] = useState();
 
   // função responsável por carregar as tarefas cadastradas do banco de dados
   async function loadTask() {
@@ -24,25 +23,17 @@ function Home() {
     })
   }
 
-  async function lateVerify() {
-    await api.get(`/task/filter/late/11:11:11:11:11:11`)
-    .then(response => {
-      setLateCount(response.data.length);
-    })
-  }
-
   function Notification() {
     setFilterActivated('late');
   }
 
   useEffect(() => {
     loadTask();
-    lateVerify();
   }, [filterActivated])
 
   return (
     <S.Container>
-      <Header lateCount={lateCount} clickNotification={Notification}/>
+      <Header clickNotification={Notification}/>
       <S.FilterArea>
           <button type="button" onClick={() => setFilterActivated("all")}>
             <FilterCard title="Todos" activated={filterActivated == 'all'}/>

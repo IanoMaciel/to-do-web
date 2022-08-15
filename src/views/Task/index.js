@@ -13,7 +13,6 @@ import typeIcons from '../../utils/typeicons';
 
 function Task({match}) {
     const [redirect, setRedirect] = useState(false);
-    const [lateCount, setLateCount] = useState();
     const [type, setType] = useState();
     const [id, setId] = useState();
     const [done, setDone] = useState(false);
@@ -22,13 +21,6 @@ function Task({match}) {
     const [date, setDate] = useState();
     const [hour, setHour] = useState();
     const [macaddress, setMacaddress] = useState('11:11:11:11:11:11');
-   
-    async function lateVerify() {
-        await api.get(`/task/filter/late/11:11:11:11:11:11`)
-        .then(response => {
-        setLateCount(response.data.length);
-        })
-    }
 
     async function LoadTaskDetails() {
         await api.get(`/task/${match.params.id}`)
@@ -88,14 +80,13 @@ function Task({match}) {
     }
 
     useEffect(() => {
-        lateVerify();
         LoadTaskDetails();
     }, [])
 
     return (
         <S.Container>
             { redirect && <Redirect to="/"/> }
-            <Header lateCount={lateCount}/>
+            <Header/>
             
             <S.Form>
                 <S.TypeIcons>
