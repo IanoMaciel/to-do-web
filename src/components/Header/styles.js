@@ -30,11 +30,11 @@ export const RigthSide = styled.div`
     align-items: center;
     justify-content: end;
     padding-right: 20px;
-    font-family: 'Roboto', sans-serif;
 
-    a {
+    a, button {
         color: #fff;
         font-weight: bold;
+        font-size: 16px;
         text-decoration: none;
         margin: 0 10px;
 
@@ -81,5 +81,11 @@ export const RigthSide = styled.div`
         margin: 0 10px;
         color: #fff
     }
+
+    /*button {
+        font-size: 18px;
+        font-weight: bold;
+        color: #fff;
+    }*/
 `
 

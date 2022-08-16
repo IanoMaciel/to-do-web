@@ -3,8 +3,8 @@ import { Redirect } from 'react-router-dom';
 import { format } from 'date-fns';
 import * as S from './styles';
 
-// api
 import api from '../../services/api'
+import isConnected from '../../utils/isConneted';
 
 // componentes
 import Header from '../../components/Header';
@@ -80,6 +80,8 @@ function Task({match}) {
     }
 
     useEffect(() => {
+        if(!isConnected)
+            setRedirect(true)
         LoadTaskDetails();
     }, [])
 

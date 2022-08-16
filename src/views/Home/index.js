@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import * as S from './styles';
 
 // api
 import api from '../../services/api'
+
+// localStorage
+import isConnected from '../../utils/isConneted';
 
 // componentes
 import Header from '../../components/Header';
@@ -14,6 +17,7 @@ import TaskCard from '../../components/TaskCard';
 function Home() {
   const [filterActivated, setFilterActivated] = useState('all');
   const [tasks, setTasks] = useState([]);
+  const [redirect, setRedirect] = useState(false);
 
   // função responsável por carregar as tarefas cadastradas do banco de dados
   async function loadTask() {
@@ -29,10 +33,15 @@ function Home() {
 
   useEffect(() => {
     loadTask();
+    
+    if(!isConnected)
+      setRedirect(true)
+
   }, [filterActivated])
 
   return (
     <S.Container>
+      { redirect && <Redirect to="/qrcode"/> }
       <Header clickNotification={Notification}/>
       <S.FilterArea>
           <button type="button" onClick={() => setFilterActivated("all")}>
