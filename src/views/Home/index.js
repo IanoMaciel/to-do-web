@@ -21,7 +21,7 @@ function Home() {
 
   // função responsável por carregar as tarefas cadastradas do banco de dados
   async function loadTask() {
-    await api.get(`/task/filter/${filterActivated}/11:11:11:11:11:11`)
+    await api.get(`/task/filter/${filterActivated}/${isConnected}`)
     .then(response => {
       setTasks(response.data);
     })
